@@ -1,0 +1,1 @@
+select * from Person.Person (nolock) where BusinessEntityID = 2383

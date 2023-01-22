@@ -1,0 +1,18 @@
+Microsoft Adventure Works 2014 veritabanı
+https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2014.bak
+
+Docker Hub
+https://hub.docker.com
+
+Sql Server Developer Edition
+https://go.microsoft.com/fwlink/?linkid=866662
+https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15
+
+Azure for Students
+https://azure.microsoft.com/en-us/free/students/
+
+Mongodb yönetim uygulaması: Robo 3T
+https://robomongo.org
+
+Mongodb örnek veritabanı
+https://docs.mongodb.com/manual/crud/

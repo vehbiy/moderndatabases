@@ -1,0 +1,152 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww15400\viewh9740\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\partightenfactor0
+
+\f0\fs24 \cf0 docker pull mongo\
+docker run -d --name mongo -p 27017:27017 mongo\
+\
+db.createCollection("users");\
+db.getCollection('users').find(\{\})\
+\
+db.users.insertOne(\
+\{\
+	name: 'ali',\
+	surname: 'veli',\
+	age: 20,\
+	address: \
+	\{\
+		city: 'istanbul',\
+		addressLine: 'Adress'\
+	\}\
+\})\
+\
+db.users.insertOne(\
+\{\
+	name: 'ali1',\
+	surname: 'veli1',\
+	age: 30,\
+	address: \
+	\{\
+		city: 'istanbul',\
+		addressLine: 'Adress'\
+	\},\
+        _id: 1234\
+\})\
+\
+db.users.insertOne(\
+\{\
+	name: 'ali1',\
+	surname: 'veli1',\
+	age: 30,\
+	address: \
+	\{\
+		city: 'istanbul',\
+		addressLine: 'Adress'\
+	\},\
+        _id: \'91\'92\
+\})\
+\
+db.users.insertOne(\
+\{\
+	name: 'ali1',\
+	surname: 'veli1',\
+	age: 12,\
+        phoneNumbers: [\{cityCode: '212', number: '2222222'\}, \{cityCode: '212', number: '2424242'\}, \{cityCode: '224', number: '33445566'\}]\
+\})\
+\
+db.users.insertOne(\
+\{\
+	ad: 'ali1',\
+	soyad: 'veli1',\
+	yas: 30,\
+	adres: \
+	\{\
+		city: 'istanbul',\
+		addressLine: 'Adress'\
+	\}\
+\})\
+\
+db.users.find(\
+    \{_id: ObjectId("5c5c33363c35db45f32ac061")\}\
+)\
+\
+db.users.find(\
+    \{_id: \{$eq: ObjectId("5c5c33363c35db45f32ac061")\}\}\
+)\
+\
+db.users.find(\
+    \{age: \{$gt: 18\}\}\
+)\
+\
+db.users.find(\
+    \{age: \{$gt: 18\}, _id: 1234\}\
+)\
+\
+db.inventory.find( \{ $or: [ \{ quantity: \{ $lt: 20 \} \}, \{ price: 10 \} ] \} )\
+\
+\
+db.users.updateMany(\
+	\{age: \{$lt: 18\}\},\
+	\{$set: \{age: 50\}\}\
+)\
+\
+db.users.insertOne(\
+\{\
+	name: 'ali',\
+	surname: 'veli',\
+	age: 20\
+\})\
+\
+db.users.deleteOne(\{_id: 1234\})\
+db.users.deleteMany(\{age: 20\})\
+\
+db.users.updateOne(\
+	\{\},\
+	\{$set: \{deletedAt: Date()\}\}\
+)\
+\
+db.users.updateMany(\
+	\{deletedAt: null\},\
+	\{$set: \{deletedAt: Date()\}\}\
+)\
+\
+db.users.updateMany(\
+	\{\},\
+	\{$set: \{deletedAt: null\}\}\
+)\
+\
+db.users.find(\{deletedAt: null\})\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+db.createCollection('inventory')\
+\
+db.inventory.insertMany( [\
+   \{ item: "journal", qty: 25, size: \{ h: 14, w: 21, uom: "cm" \}, status: "A" \},\
+   \{ item: "notebook", qty: 50, size: \{ h: 8.5, w: 11, uom: "in" \}, status: "A" \},\
+   \{ item: "paper", qty: 100, size: \{ h: 8.5, w: 11, uom: "in" \}, status: "D" \},\
+   \{ item: "planner", qty: 75, size: \{ h: 22.85, w: 30, uom: "cm" \}, status: "D" \},\
+   \{ item: "postcard", qty: 45, size: \{ h: 10, w: 15.25, uom: "cm" \}, status: "A" \}\
+]);\
+\
+db.inventory.find( \{ size: \{ h: 14, w: 21, uom: "cm" \} \} )\
+db.inventory.find( \{ "size.uom": "in" \} )\
+db.inventory.find( \{ "size.h": \{ $lt: 15 \} \} )\
+db.inventory.find( \{ "size.h": \{ $lt: 15 \}, "size.uom": "in", status: "D" \} )\
+\
+\'97\'97\'97\'97\'97\'97\'97Array\
+db.inventory.insertMany([\
+   \{ item: "journal", qty: 25, tags: ["blank", "red"], dim_cm: [ 14, 21 ] \},\
+   \{ item: "notebook", qty: 50, tags: ["red", "blank"], dim_cm: [ 14, 21 ] \},\
+   \{ item: "paper", qty: 100, tags: ["red", "blank", "plain"], dim_cm: [ 14, 21 ] \},\
+   \{ item: "planner", qty: 75, tags: ["blank", "red"], dim_cm: [ 22.85, 30 ] \},\
+   \{ item: "postcard", qty: 45, tags: ["blue"], dim_cm: [ 10, 15.25 ] \}\
+]);\
+\
+db.inventory.find( \{ tags: ["red", "blank"] \} )\
+db.inventory.find( \{ tags: \{ $all: ["red", "blank"] \} \} )\
+db.inventory.find( \{ "tags": \{ $size: 3 \} \} )\
+\
+}

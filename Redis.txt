@@ -1,0 +1,88 @@
+set server:name “database server”
+get server:name
+
+set categories [{"name": "game console", "id": 1},"name": "cell phone", "id": 2}]
+set connections 10
+set connections 20
+get connections
+setnx connections 30
+get connections
+incr connections
+get connections
+setex x 100 10
+
+SET resource:lock "Redis Demo"
+TTL resource:lock
+EXPIRE resource:lock 120
+TTL resource:lock
+
+    RPUSH friends "Alice"
+    RPUSH friends "Bob"
+    LPUSH friends "Sam"
+    LRANGE friends 0 -1 => 1) "Sam", 2) "Alice", 3) "Bob"
+    LRANGE friends 0 1 => 1) "Sam", 2) "Alice"
+    LRANGE friends 1 2 => 1) "Alice", 2) "Bob"
+LLEN friends
+ LPOP friends 
+  RPOP friends
+
+
+set goog www.google.com
+set yah	www.yahoo.com
+mset itu www.itu.edu.tr boun www.boun.edu.tr 
+MGET gog yah
+SET count 2
+INCR count
+GET count
+SET bad_count "a"
+INCR bad_count
+
+MULTI
+SET prag http://pragprog.com
+INCR count
+EXEC
+// DISCARD
+
+MSET user:eric:name "Eric Redmond" user:eric:password s3cret
+MGET user:eric:name user:eric:password
+
+HMSET user:eric name "Eric Redmond" password s3cret
+HVALS user:eric
+HKEYS user:eric
+HGET user:eric password
+HLEN user:eric
+
+RPUSH eric:wishlist 7wks gog prag
+LLEN eric:wishlist
+LRANGE eric:wishlist 0 -1
+LREM eric:wishlist 0 gog
+LPOP eric:wishlist // queue
+RPOP eric:wishlist // stack
+
+redis.multi do
+	site = redis.rpop('eric:wishlist') 	redis.lpush('eric:visited', site)
+end
+
+RPOPLPUSH eric:wishlist eric:visited
+// publisher/subscriber
+BRPOP comments 300
+LPUSH comments "Prag is great! I buy all my books there."
+
+// set
+SADD news nytimes.com pragprog.com
+SMEMBERS news
+SADD tech pragprog.com apple.com
+SINTER news tech // intersection
+SDIFF news tech
+SUNION news tech
+SUNIONSTORE websites news tech // SINTERSTORE, SDIFFSTORE
+SCARD websites
+
+// sorted set
+ZADD visits 500 7wks 9 gog 9999 prag
+ZINCRBY visits 1 prag
+ZRANGE visits 0 1
+ZREVRANGE visits 0 -1 WITHSCORES
+ZRANGEBYSCORE visits 9 9999 // all scores where 9 <= score <= 10,000
+ZRANGEBYSCORE visits (9 9999)
+ZRANGEBYSCORE visits -inf inf 

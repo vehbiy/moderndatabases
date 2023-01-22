@@ -1,0 +1,22 @@
+docker run -d --name cassandra -p 9042:9042 cassandra
+
+// START-cyclingks
+CREATE KEYSPACE IF NOT EXISTS cycling
+WITH replication = {'class': 'SimpleStrategy', 'replication_factor':1};
+// END-cyclingks
+
+//START-usecycling
+USE cycling;
+//END-usecycling
+
+DROP KEYSPACE "Cycling";
+
+// START-multi
+CREATE KEYSPACE "Cycling"
+  WITH REPLICATION = {
+   'class' : 'NetworkTopologyStrategy', 
+   'boston'  : 3 , // Datacenter 1 
+   'seattle' : 2 , // Datacenter 2
+   'tokyo'   : 2   // Datacenter 3
+  };
+// END-multi
