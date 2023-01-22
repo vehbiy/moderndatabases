@@ -1,0 +1,18 @@
+﻿[
+  {
+    "outputFile": "Scripts/angular/App.es5.js",
+    "inputFile": "Scripts/angular/App.js"
+  },
+  {
+    "outputFile": "Scripts/angular/Services/ApiService.es5.js",
+    "inputFile": "Scripts/angular/Services/ApiService.js"
+  },
+  {
+    "outputFile": "Scripts/angular/Controller/VehicleInput.Ctrl.es5.js",
+    "inputFile": "Scripts/angular/Controller/VehicleInput.Ctrl.js"
+  },
+  {
+    "outputFile": "Scripts/angular/Controller/Credit.Ctrl.es5.js",
+    "inputFile": "Scripts/angular/Controller/Credit.Ctrl.js"
+  }
+]

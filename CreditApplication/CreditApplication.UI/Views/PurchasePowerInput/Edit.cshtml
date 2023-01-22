@@ -1,0 +1,217 @@
+@model PurchasePowerInput
+
+<div class="wrapper wrapper-content animated fadeInRight" ng-controller="PurchasePowerInputCtrl">
+    <div class="row" ng-init="InitEdit()">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                @using (Html.BeginForm("Edit", "PurchasePowerInput"))
+                {
+                    <div class="ibox-title">
+                        <h5>@Html.Localize("PurchasePowerInput")</h5>
+                        <div class="ibox-tools">
+                            @Html.SaveLink("Hesapla")
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true)
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @foreach (Product product in Model.Products)
+                                    {
+                                        <div class="col-md-2 text-center">
+                                            <a ng-click="SelectVehicle(@product.Price)">
+                                                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                                                {
+                                                    <img src="@product.ImageUrl" width="200" />
+                                                }
+                                                @Html.Label("", product.Name)
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LocalizedStyledLabel("PurchasePowerInput.Price")
+                                </div>
+                                <div class="col-md-4">
+                                    @*@Html.StyledRightAlignedTextBoxFor(model => model.Price)*@
+                                    @Html.TextBoxFor(model => model.Price, new { @ng_model = "model.Price", @class = "text-box single-line form-control text-right" })
+                                    @Html.ValidationMessageFor(model => model.Price)
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.LocalizedStyledLabel("PurchasePowerInput.CreditType")
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.StyledDropDownListForEnum("CreditType", typeof(CreditType), Model.CreditType, appendOptionLabel: false, disabled: true)
+                                    @Html.ValidationMessageFor(model => model.CreditType)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LocalizedStyledLabel("PurchasePowerInput.UserType")
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.StyledDropDownListForEnum("UserType", typeof(UserType), Model.UserType, appendOptionLabel: false)
+                                    @Html.ValidationMessageFor(model => model.UserType)
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.LocalizedStyledLabel("PurchasePowerInput.InstallmentAmount")
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.StyledRightAlignedTextBoxFor(model => model.InstallmentAmount)
+                                    @Html.ValidationMessageFor(model => model.InstallmentAmount)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LocalizedStyledLabel("PurchasePowerInput.AdvancePayment")
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.StyledRightAlignedTextBoxFor(model => model.AdvancePayment)
+                                    @Html.ValidationMessageFor(model => model.AdvancePayment)
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.LocalizedStyledLabel("PurchasePowerInput.Months")
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.StyledRightAlignedTextBoxFor(model => model.Months)
+                                    @Html.ValidationMessageFor(model => model.Months)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LocalizedStyledLabel("PurchasePowerInput.InterestRate")
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.StyledRightAlignedTextBoxFor(model => model.InterestRate)
+                                    @Html.ValidationMessageFor(model => model.InterestRate)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if (Model.CalculationResults != null && Model.CalculationResults.Count != 0)
+    {
+        int count = 1;
+        int index = 0;
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                    </th>
+                                    @foreach (var result in Model.CalculationResults)
+                                    {
+                                        string text = "Seçenek-" + count.ToString();
+                                        count++;
+                                        <th class="text-center">
+                                            @text
+                                        </th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Html.LocalizedStyledLabel("PurchasePowerInput.Price")</td>
+                                    @foreach (var result in Model.CalculationResults)
+                                    {
+                                        <td class="text-right">
+                                            @result.Price.ToString("N02")
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>@Html.LocalizedStyledLabel("PurchasePowerInput.AdvancePaymentAmount")</td>
+                                    @foreach (var result in Model.CalculationResults)
+                                    {
+                                        <td class="text-right">
+                                            @result.AdvancePayment.ToString("N02")
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>@Html.LocalizedStyledLabel("PurchasePowerInput.CreditAmount")</td>
+                                    @foreach (var result in Model.CalculationResults)
+                                    {
+                                        <td class="text-right">
+                                            @result.CreditAmount.ToString("N02")
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>@Html.LocalizedStyledLabel("PurchasePowerInput.Months")</td>
+                                    @foreach (var result in Model.CalculationResults)
+                                    {
+                                        <td class="text-right">
+                                            @result.Months.ToString()
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>@Html.LocalizedStyledLabel("PurchasePowerInput.InterestRate")</td>
+                                    @foreach (var result in Model.CalculationResults)
+                                    {
+                                        <td class="text-right">
+                                            @result.MonthlyInterestRate.ToString("N02")
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>@Html.LocalizedStyledLabel("PurchasePowerInput.InstallmentAmount")</td>
+                                    @foreach (var result in Model.CalculationResults)
+                                    {
+                                        <td class="text-right">
+                                            @result.InstallmentAmount.ToString("N02")
+                                        </td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                @{
+                    count = 1;
+                }
+                @foreach (var result in Model.CalculationResults)
+                {
+                    string text = "Seçenek-" + count.ToString();
+                    count++;
+                    @Html.Label(text)<br />@result.Description
+                    <br /><br />
+                }
+                @using (Html.BeginForm("UpgradeProduct", "PurchasePowerInput"))
+                {
+                    @Html.SaveLink("PurchasePowerInput.UpgradeProduct")
+                }
+            </div>
+        </div>
+        <div class="row" ng-show="false">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-8">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    window.model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, new JsonSerializerSettings{ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+</script>
