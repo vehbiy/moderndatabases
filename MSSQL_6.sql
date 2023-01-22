@@ -107,7 +107,7 @@ go
 select newid()
 
 
--- Lock örneği iki ayrı pencerede çalıştırılmalıdır.
+-- Lock sample should be executed in two seperate windows
 begin tran
 update Person.Person 
 	set FirstName = 'gdsdsds',
@@ -117,4 +117,4 @@ update Person.Person
 rollback
 
 SELECT * FROM Person.Person (nolock) where BusinessEntityID = 16104
--- Lock örneği
+-- Lock sample
