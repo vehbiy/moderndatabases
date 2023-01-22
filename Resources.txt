@@ -1,4 +1,4 @@
-Microsoft Adventure Works 2014 veritabanı
+Microsoft Adventure Works 2014 sample database
 https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2014.bak
 
 Docker Hub
@@ -11,8 +11,8 @@ https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-
 Azure for Students
 https://azure.microsoft.com/en-us/free/students/
 
-Mongodb yönetim uygulaması: Robo 3T
+Mongodb management application: Robo 3T
 https://robomongo.org
 
-Mongodb örnek veritabanı
+Mongodb sample database
 https://docs.mongodb.com/manual/crud/
