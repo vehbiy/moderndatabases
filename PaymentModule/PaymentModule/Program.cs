@@ -1,4 +1,5 @@
-﻿using PaymentModule;
+﻿using System;
+using PaymentModule;
 
 var member = new Member("Ali", "Kara", DateTime.Today.AddYears(-30));
 var result = member.Save();
