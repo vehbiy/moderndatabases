@@ -1,0 +1,34 @@
+﻿<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                @if (UIStateManager.Instance.Member != null)
+                {
+                    <div class="dropdown profile-element">
+                        <span>
+                            <img alt="image" class="img-circle" src="/Images/@UIStateManager.Instance.Member.ProfilePhoto" width="64">
+                        </span>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear">
+                                <span class="block m-t-xs">
+                                    <strong class="font-bold">@UIStateManager.Instance.Member.FullName</strong>
+                                </span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="logo-element">
+                        IN+
+                    </div>
+                }
+            </li>
+            <li class="@Html.IsSelected(action: "List")">
+                @*<a href="@Url.Action("Edit", "VehicleInput")"><i class="fa fa-laptop"></i> <span class="nav-label">@Html.Localize("Menu.VehicleRental")</span> </a>*@
+                <a href="@Url.Action("Edit", "VehicleInput")"><i class="fa fa-bus"></i> <span class="nav-label">Araç Kiralama</span> </a>
+                @*<a href="@Url.Action("Edit", "Credit", new { @CreditType = (int)CreditType.Personal })"><i class="fa fa-user-circle"></i> <span class="nav-label">İhtiyaç Kredisi</span> </a>*@
+                <a href="@Url.Action("Edit", "Credit", new { @CreditType = (int)CreditType.Vehicle })"><i class="fa fa-car"></i> <span class="nav-label">Araç Kredisi</span> </a>
+                @*<a href="@Url.Action("Edit", "Credit", new { @CreditType = (int)CreditType.House })"><i class="fa fa-home"></i> <span class="nav-label">Konut Kredisi</span> </a>*@
+                <a href="@Url.Action("Edit", "PurchasePowerInput")"><i class="fa fa-money"></i> <span class="nav-label">Alım Gücü Hesaplama</span> </a>
+            </li>
+        </ul>
+    </div>
+</nav>

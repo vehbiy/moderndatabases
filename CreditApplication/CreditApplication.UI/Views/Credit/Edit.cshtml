@@ -1,0 +1,146 @@
+@model Credit
+
+@*@{
+        List<>
+    }*@
+
+<div class="wrapper wrapper-content animated fadeInRight" ng-controller="CreditCtrl">
+    <div class="row" ng-init="InitEdit()">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                @using (Html.BeginForm())
+                {
+                    <div class="ibox-title">
+                        @*<h5>@Html.EditPageTitle("Credit")</h5>*@
+                        <h5>@Model.CreditType.GetDescription() @Html.Localize("Credit.Calculation")</h5>
+                        <div class="ibox-tools">
+                            @Html.SaveLink("Hesapla")
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true)
+                            @if (Model.CreditType == CreditType.Vehicle)
+                            {
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        @foreach (Product product in Model.Products)
+                                        {
+                                            <div class="col-md-2 text-center">
+                                                <a ng-click="SelectVehicle(@product.Price)">
+                                                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                                                    {
+                                                        <img src="@product.ImageUrl" width="200" />
+                                                    }
+                                                    @Html.Label("", product.Name)
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LocalizedStyledLabel("Credit.UserType")
+                                    @*@Html.StyledLabel("Kredi Tipi")*@
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.StyledDropDownListForEnum("UserType", typeof(UserType), Model.UserType, appendOptionLabel: false, disabled: Model.CreditType != CreditType.Vehicle)
+                                    @Html.ValidationMessageFor(model => model.UserType)
+                                </div>
+                                @if (Model.InstallmentAmount.HasValue)
+                                {
+                                    <div class="col-md-2">
+                                        @Html.LocalizedStyledLabel("Credit.InstallmentAmount")
+                                        @*@Html.StyledLabel("Kredi Taksit Tutarý (TL)")*@
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.StyledLabel("", labelText: Model.InstallmentAmount.Value.ToString("N02"))
+                                        @Html.ValidationMessageFor(model => model.InstallmentAmount)
+                                    </div>
+                                }
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LocalizedStyledLabel("Credit.CreditAmount")
+                                    @*@Html.StyledLabel("Kredi Tutarý Toplam (TL)")*@
+                                </div>
+                                <div class="col-md-4">
+                                    @*@Html.EditorFor(model => model.CreditAmount, new { htmlAttributes = new { @onclick = "SelectAll('CreditAmount');" } })*@
+                                    @Html.TextBoxFor(model => model.CreditAmount, new { @ng_model = "model.CreditAmount", @class = "text-box single-line form-control text-right" })
+                                    @*@Html.StyledRightAlignedTextBoxFor(model => model.CreditAmount)*@
+                                    @Html.ValidationMessageFor(model => model.CreditAmount)
+                                </div>
+                                @if (Model.InstallmentAmount.HasValue)
+                                {
+                                    <div class="col-md-2">
+                                        @Html.LocalizedStyledLabel("Credit.BSMVRate")
+                                        @*@Html.StyledLabel("Faiz BSMV Oraný (%)")*@
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.StyledLabel("", labelText: Model.BSMVRate.ToString("N02"))
+                                        @Html.ValidationMessageFor(model => model.BSMVRate)
+                                    </div>
+                                }
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LocalizedStyledLabel("Credit.InterestRate")
+                                    @*@Html.StyledLabel("Kredi Faiz Oraný (%)")*@
+                                </div>
+                                <div class="col-md-4">
+                                    @*@Html.EditorFor(model => model.InterestRate, new { htmlAttributes = new { @onclick = "SelectAll('InterestRate');" } })*@
+                                    @Html.StyledRightAlignedTextBoxFor(model => model.InterestRate)
+                                    @Html.ValidationMessageFor(model => model.InterestRate)
+                                </div>
+                                @if (Model.InstallmentAmount.HasValue)
+                                {
+                                    <div class="col-md-2">
+                                        @Html.LocalizedStyledLabel("Credit.KKDFRate")
+                                        @*@Html.StyledLabel("Faiz KKDF Oraný (%)")*@
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.StyledLabel("", labelText: Model.KKDFRate.ToString("N02"))
+                                        @Html.ValidationMessageFor(model => model.KKDFRate)
+                                    </div>
+                                }
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LocalizedStyledLabel("Credit.Months")
+                                    @*@Html.StyledLabel("Kredi Vadesi (Ay)")*@
+                                </div>
+                                <div class="col-md-4">
+                                    @*@Html.EditorFor(model => model.Months, new { htmlAttributes = new { @onclick = "SelectAll('Months');" } })*@
+                                    @Html.StyledRightAlignedTextBoxFor(model => model.Months)
+                                    @Html.ValidationMessageFor(model => model.Months)
+                                </div>
+                                @if (Model.InstallmentAmount.HasValue)
+                                {
+                                    <div class="col-md-2">
+                                        @Html.LocalizedStyledLabel("Credit.InterestRateWithTax")
+                                        @*@Html.StyledLabel("Vergili Faiz Oraný (%)")*@
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.StyledLabel("", labelText: Model.InterestRateWithTax.ToString("N02"))
+                                        @Html.ValidationMessageFor(model => model.InterestRateWithTax)
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, new JsonSerializerSettings{ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+    function SelectAll(id) {
+        document.getElementById(id).focus();
+        document.getElementById(id).select();
+    }
+</script>
